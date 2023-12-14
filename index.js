@@ -40,28 +40,36 @@ app.get('/addImageToS3Bucket', (req, res) => {
 })
 
 
-//Connect to RDS database [SQL]
+//Connect to RDS database [MSSQL]
 
-const mysql = require('mysql');
 const username = "admin"
 const password = "Salis2002"
-const dbIdentifier = "cloudproject-db-instamce"
-const host = "http://cloudproject-db-instamce.clhqrc3ybntf.us-east-1.rds.amazonaws.com/"
+const dbIdentifier = "cloudproject-db"
+const host = "http://cloudproject-db.clhqrc3ybntf.us-east-1.rds.amazonaws.com/"
 
-const connection = mysql.createConnection({
-    host: host,
+const sql = require('mssql')
+
+const config = {
     user: username,
     password: password,
+    server: host,
     database: dbIdentifier
-});
+}
 
-connection.connect((err) => {
-    if(err){
-        console.log('Error connecting to Db' , err);
-        return;
+//Connect to RDS database [MSSQL]
+
+const connectToRDS = async () => {
+    try {
+        await sql.connect(config)
+        console.log("Connected to RDS database")
+    } catch (err) {
+        console.log(err)
     }
-    console.log('Connection established');
-})
+}
+
+connectToRDS()
+
+
 
 
 
