@@ -9,21 +9,12 @@ const urlencodedParser = bodyParser.urlencoded({ extended: true, limit: '50mb' }
 app.use(jsonParser);
 app.use(urlencodedParser);
 
-const cors = require('cors');
-//frontend : http://23.22.172.238:3000
-
-app.use(
-    cors({
-        origin: [
-            'http://52.6.7.86:3000',
-            'http://localhost:3000',
-            '*'
-        ],
-    })
-);
-
-
-
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
 
 //json-parser
 app.use(bodyParser.json());
