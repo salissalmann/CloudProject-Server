@@ -10,8 +10,19 @@ app.use(jsonParser);
 app.use(urlencodedParser);
 
 const cors = require('cors');
-//if want to allow all origins
-app.use(cors());
+//frontend : http://23.22.172.238:3000
+
+app.use(
+    cors({
+        origin: [
+            'http://23.22.172.238:3000',
+            'http://localhost:3000',
+            '*'
+        ],
+    })
+);
+
+
 
 
 //json-parser
